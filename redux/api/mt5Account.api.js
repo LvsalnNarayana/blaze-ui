@@ -7,7 +7,9 @@ export const mt5AccountApi = createApi({
     prepareHeaders: async (headers) => {
       try {
         const { getToken } = useAuth();
+        
         const token = await getToken(); // Retrieve Clerk session token
+        console.log("Token:", token);
         if (token) {
           headers.set("Authorization", `Bearer ${token}`);
         }
