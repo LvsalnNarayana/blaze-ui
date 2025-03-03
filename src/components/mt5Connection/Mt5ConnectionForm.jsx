@@ -73,9 +73,9 @@ const Mt5ConnectionForm = () => {
     return valid;
   };
 
+  const { getToken } = useAuth();
   const handleSubmit = async() => {
     if (!validateForm()) return;
-    const { getToken } = useAuth();
         
     const token = await getToken(); 
     connectMt5({
