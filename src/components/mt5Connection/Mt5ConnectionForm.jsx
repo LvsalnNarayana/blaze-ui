@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { useConnectMt5Mutation } from "../../../redux/api/mt5Account.api";
+import { useAuth } from '@clerk/clerk-react';
 
 const Mt5ConnectionForm = () => {
   const [formData, setFormData] = useState({
@@ -72,12 +73,16 @@ const Mt5ConnectionForm = () => {
     return valid;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async() => {
     if (!validateForm()) return;
+    const { getToken } = useAuth();
+        
+    const token = await getToken(); 
     connectMt5({
       mt5_account_number: formData.mt5_account_number,
       password: formData.password,
       mt5_server: formData.mt5_server_details,
+      token
     });
     console.log("Form submitted with:", formData);
     // API Call or Next Steps Here
