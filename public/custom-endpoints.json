@@ -1,0 +1,246 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a frontend API Documentation for quick API calls",
+        "version": "1.0.0",
+        "title": "Blaze Algo"
+    },
+    "host": "localhost:3000",
+    "basePath": "/",
+    "tags": [
+        {
+            "name": "pet",
+            "description": "Everything about your Pets"
+        },
+        {
+            "name": "Authentication",
+            "description": "Authentication Endpoints"
+        },
+        {
+            "name": "Referrals",
+            "description": "Referral Endpoints"
+        }
+    ],
+    "schemes": [
+        "http"
+    ],
+    "securityDefinitions": {
+        "cookieAuth": {
+            "type": "apiKey",
+            "in": "cookie",
+            "name": "session-token",
+            "description": "The session-token cookie contains an object with user session information, which is required for protected routes."
+        }
+    },
+    "paths": {
+        "/protected": {
+            "get": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Protected route that requires cookie authentication",
+                "description": "This endpoint requires the session-token cookie for access.",
+                "operationId": "uploadFile",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "cookieAuth": [
+                            {}
+                        ]
+                    }
+                ]
+            }
+        },
+        "/auth/sign-up": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Test registration endpoint for clerk",
+                "description": "",
+                "operationId": "uploadFile",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "User registration data",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/UserRegistration"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ]
+            }
+        },
+        "/referral/create": {
+            "post": {
+                "tags": [
+                    "Referrals"
+                ],
+                "summary": "Test registration endpoint for clerk",
+                "description": "",
+                "operationId": "uploadFile",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "User registration data",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/referralModel"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ]
+            }
+        },
+        "/referral/tree": {
+            "get": {
+                "tags": [
+                    "Referrals"
+                ],
+                "summary": "Register a referral under the user's referral tree",
+                "description": "This endpoint allows a user to register a referral code and add themselves under the referral tree of the provided `userId`.",
+                "operationId": "registerReferral",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Successfully added the user under the referral tree",
+                        "schema": {
+                            "$ref": "#/definitions/ApiResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid or missing input data",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Referrer not found",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "Referral relation already exists",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "definitions": {
+        "ApiResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "UserRegistration": {
+            "type": "object",
+            "properties": {
+                "firstName": {
+                    "type": "string"
+                },
+                "lastName": {
+                    "type": "string"
+                },
+                "emailAddress": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "format": "email"
+                    }
+                }
+            }
+        },
+        "referralModel": {
+            "type": "object",
+            "properties": {
+                "shareCode": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
