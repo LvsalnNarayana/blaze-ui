@@ -5,10 +5,15 @@ import AuthLayout from "./layouts/AuthLayout";
 import TempLayout from "./layouts/TempLayout";
 import Signup from "./pages/Auth/Signup";
 import ConnectMT5 from "./pages/ConnectMT5";
-
+import AccountLayout from "./layouts/AccountLayout";
+import Referrals from "./pages/Account/Referrals";
+import Sessions from "./pages/Account/Sessions";
+import Settings from "./pages/Account/Settings";
+import Profile from "./pages/Account/Profile";
+import Invoices from "./pages/Account/Invoices";
+import NotFound from "./pages/NotFound";
 
 function App() {
-
   return (
     <Routes>
       <Route
@@ -28,6 +33,13 @@ function App() {
         }
       />
       <Route element={<AuthLayout />}>
+        <Route path="/account" element={<AccountLayout />}>
+          <Route path="profile" element={<Profile />} />
+          <Route path="referrals" element={<Referrals />} />
+          <Route path="sessions" element={<Sessions />} />
+          <Route path="settings" element={<Settings />} />
+          <Route path="invoices" element={<Invoices />} />
+        </Route>
         <Route
           path="/connect-mt5"
           element={
@@ -45,6 +57,7 @@ function App() {
           }
         />
       </Route>
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }

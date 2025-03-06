@@ -16,13 +16,15 @@
     "@mui/icons-material": "^6.4.5",
     "@mui/material": "^6.4.5",
     "@reduxjs/toolkit": "^2.6.0",
+    "@xyflow/react": "^12.4.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^6.29.0",
     "styled-components": "^6.1.15",
     "swagger-themes": "^1.4.3",
-    "swagger-ui-react": "^5.19.0"
+    "swagger-ui-react": "^5.19.0",
+    "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",

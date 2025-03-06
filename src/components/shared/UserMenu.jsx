@@ -5,8 +5,10 @@ import PersonIcon from "@mui/icons-material/Person";
 import { IconButton, ListItemIcon, Stack, Typography } from "@mui/material";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import { useAuth, useUser } from "@clerk/clerk-react";
+import { useNavigate } from "react-router-dom";
 const UserMenu = () => {
   const { user } = useUser();
+  const navigate = useNavigate();
   const { signOut } = useAuth();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -54,6 +56,7 @@ const UserMenu = () => {
         id="basic-menu"
         anchorEl={anchorEl}
         open={open}
+        disableAutoFocusItem
         onClose={handleClose}
         MenuListProps={{
           "aria-labelledby": "basic-button",
@@ -96,7 +99,10 @@ const UserMenu = () => {
       >
         <MenuItem
           disabled
-          onClick={handleClose}
+          onClick={() => {
+            navigate("/account/profile");
+            handleClose();
+          }}
           sx={{ fontSize: "14px", fontWeight: 400 }}
         >
           <ListItemIcon
@@ -107,9 +113,8 @@ const UserMenu = () => {
           >
             <PersonIcon fontSize="small" />
           </ListItemIcon>
-          Profile
+          Account
         </MenuItem>
-
         <MenuItem
           onClick={handleSignout}
           sx={{ fontSize: "14px", fontWeight: 400 }}

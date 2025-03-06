@@ -6,8 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 const Welcome = () => {
   const navigate = useNavigate();
   const { user } = useUser();
-  console.log(user);
-  
+
   return (
     <Stack
       justifyContent={"center"}
@@ -60,8 +59,13 @@ const Welcome = () => {
           ? "MT5 Connected Successfully"
           : "Connect to MT5"}
       </Button>
+      <Typography variant="body1" sx={{ mt: 2 }} fontSize={14} fontWeight={400}>
+        Dashboard coming soon...
+      </Typography>
       <Typography variant="body1" sx={{ mt: 2 }} color="#1058DF">
-        <Link to="/">Go back to website</Link>
+        <Link style={{ color: "#1058DF" }} to="/">
+          Go back to website
+        </Link>
       </Typography>
     </Stack>
   );

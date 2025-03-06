@@ -1,24 +1,22 @@
-import { useUser } from "@clerk/clerk-react";
-import { Avatar, Box, Container, Stack, Typography } from "@mui/material";
-import React from "react";
+import { Box, Container, Stack } from "@mui/material";
+import UserMenu from "./UserMenu";
+import { Link } from "react-router-dom";
 
 const Header = () => {
-  const { user } = useUser();
   return (
-    <Stack spacing={2} sx={{ bgcolor: "#eee", py: 1, color: "white" }}>
-      <Container>
+    <Stack spacing={2} sx={{ bgcolor: "#eee", py: 1 }}>
+      <Container
+        disableGutters
+        maxWidth={"desktop"}
+        sx={{
+          mx: "auto !important",
+        }}
+      >
         <Stack direction={"row"} justifyContent={"space-between"}>
-          <Box component={"img"} src="/Blaze_logo.svg" width={"60px"} />
-          <Avatar
-            sx={{
-              width: 32,
-              height: 32,
-              bgcolor: "primary.main",
-              fontSize: "14px",
-            }}
-          >
-            {user.firstName.toString()?.[0]}
-          </Avatar>
+          <Link to={"/"}>
+            <Box component={"img"} src="/Blaze_logo.svg" width={"100px"} />
+          </Link>
+          <UserMenu />
         </Stack>
       </Container>
     </Stack>

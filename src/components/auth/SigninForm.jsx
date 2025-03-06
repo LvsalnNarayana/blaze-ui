@@ -18,8 +18,8 @@ const SigninForm = () => {
   const { signIn, isLoaded, setActive } = useSignIn();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState("test3@blazealgo.com");
-  const [password, setPassword] = useState("f6jURAi9nYRxBL2");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({ email: "", password: "", auth: "" });
   const [loading, setLoading] = useState(false);
 
@@ -94,7 +94,7 @@ const SigninForm = () => {
   };
 
   return (
-    <Stack width="100%" justifyContent="center" alignItems="center" spacing={2}>
+    <Stack width="100%" height={"100%"} justifyContent="center" alignItems="center" spacing={2}>
       <Stack width="45%" spacing={3} alignItems="center">
         <Typography variant="h4" fontSize={36} fontWeight={500}>
           Signin
@@ -199,12 +199,11 @@ const SigninForm = () => {
         >
           {loading ? "Signing in..." : "Sign In"}
         </Button>
-        <Divider flexItem>
+        {/* <Divider flexItem>
           <Typography variant="body1" fontSize={14}>
             or
           </Typography>
         </Divider>
-        {/* Google Sign-In Button */}
         <Button
           fullWidth
           variant="outlined"
@@ -222,9 +221,9 @@ const SigninForm = () => {
           startIcon={<img src="/google.png" alt="Google logo" width="20" />}
         >
           Sign in with Google
-        </Button>
+        </Button> */}
         <Typography fontSize={14} fontWeight={300} mx="auto">
-          Don't have an account? <Link to="/signup">Sign up</Link>
+          Don&apos;t have an account? <Link to="/signup">Sign up</Link>
         </Typography>
 
         {/* Display Authentication Errors */}

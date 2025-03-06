@@ -1,6 +1,6 @@
 const generateThemeOptions = (appTheme) => {
   const mode = appTheme?.mode || "light";
-  const primaryColor = "#005093";
+  const primaryColor = "#1058DF";
   const secondaryColor = "#ED502E";
 
   return {
@@ -218,9 +218,6 @@ const generateThemeOptions = (appTheme) => {
             "& .MuiInputBase-root .MuiOutlinedInput-notchedOutline": {
               border: `1px solid #ccc`,
             },
-            "& .MuiInputBase-root:hover .MuiOutlinedInput-notchedOutline": {
-              border: `1px solid ${primaryColor}`,
-            },
             "& .MuiInputBase-root.Mui-disabled .MuiOutlinedInput-notchedOutline":
               {
                 border: "1px solid #ccc",
@@ -228,11 +225,6 @@ const generateThemeOptions = (appTheme) => {
             "& .MuiInputBase-root.Mui-disabled:hover .MuiOutlinedInput-notchedOutline":
               {
                 border: "1px solid #ccc",
-              },
-
-            "& .MuiInputBase-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-              {
-                border: `1px solid ${primaryColor}`,
               },
           },
         },

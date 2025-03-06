@@ -1,6 +1,7 @@
 import {
   Button,
   FormControl,
+  LinearProgress,
   Stack,
   TextField,
   Typography,
@@ -8,15 +9,20 @@ import {
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useRegisterUserMutation } from "../../../redux/api/auth.api";
+import zxcvbn from "zxcvbn";
 
 const SignupForm = () => {
   const [formData, setFormData] = useState({
-    firstname: "Test",
-    lastname: "User4",
-    email: "test4@blazealgo.com",
-    mobile: "0987654321",
-    password: "f6jURAi9nYRxBL2",
-    confirm_password: "f6jURAi9nYRxBL2",
+    firstname: "",
+    lastname: "",
+    email: "",
+    mobile: "",
+    password: "",
+    confirm_password: "",
+  });
+  const [passwordStrength, setPasswordStrength] = useState({
+    score: 0,
+    feedback: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -30,19 +36,19 @@ const SignupForm = () => {
     },
   ] = useRegisterUserMutation();
 
-  // console.log({
-  //   registrationLoading,
-  //   registrationSuccess,
-  //   registrationError,
-  //   registrationErrorData,
-  // });
-  
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
 
     setErrors((prev) => ({ ...prev, [name]: "" }));
+    // Check password strength when the password field is updated
+    if (name === "password") {
+      const result = zxcvbn(value);
+      setPasswordStrength({
+        score: result.score,
+        feedback: result.feedback.suggestions.join(" ") || "Strong password!",
+      });
+    }
   };
 
   const validateForm = () => {
@@ -61,8 +67,8 @@ const SignupForm = () => {
     }
     if (!formData.password) {
       newErrors.password = "Password is required";
-    } else if (formData.password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters";
+    } else if (passwordStrength.score < 4) {
+      newErrors.password = "Password must be strong";
     }
     if (!formData.confirm_password) {
       newErrors.confirm_password = "Please confirm your password";
@@ -77,13 +83,12 @@ const SignupForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      console.log("Form Data Submitted:", formData);
 
       registerUser(formData);
     }
   };
   return (
-    <Stack width="100%" justifyContent="center" alignItems="center" spacing={2}>
+    <Stack width="100%" justifyContent="center" alignItems="center" spacing={2} py={2}>
       <Stack
         gap={1}
         width={"55%"}
@@ -127,6 +132,7 @@ const SignupForm = () => {
                   },
                   "& .MuiFormHelperText-root": {
                     fontSize: "12px",
+                    fontWeight: 300,
                     mx: 0.5,
                     mt: 1,
                   },
@@ -163,6 +169,7 @@ const SignupForm = () => {
                   },
                   "& .MuiFormHelperText-root": {
                     fontSize: "12px",
+                    fontWeight: 300,
                     mx: 0.5,
                     mt: 1,
                   },
@@ -200,6 +207,7 @@ const SignupForm = () => {
                 },
                 "& .MuiFormHelperText-root": {
                   fontSize: "12px",
+                  fontWeight: 300,
                   mx: 0.5,
                   mt: 1,
                 },
@@ -236,6 +244,7 @@ const SignupForm = () => {
                 },
                 "& .MuiFormHelperText-root": {
                   fontSize: "12px",
+                  fontWeight: 300,
                   mx: 0.5,
                   mt: 1,
                 },
@@ -273,6 +282,7 @@ const SignupForm = () => {
                 },
                 "& .MuiFormHelperText-root": {
                   fontSize: "12px",
+                  fontWeight: 300,
                   mx: 0.5,
                   mt: 1,
                 },
@@ -288,6 +298,38 @@ const SignupForm = () => {
               }}
             />
           </FormControl>
+          <LinearProgress
+            variant="determinate"
+            value={
+              formData?.password !== "" ? (passwordStrength.score + 1) * 20 : 0
+            } // Convert score (0-4) to 0-100%
+            color={
+              passwordStrength.score === 0
+                ? "error" // Very Weak (Red)
+                : passwordStrength.score === 1
+                ? "error" // Weak (Red)
+                : passwordStrength.score === 2
+                ? "warning" // Moderate (Orange)
+                : "success"
+            }
+          />
+
+          <Typography
+            fontSize={12}
+            fontWeight={400}
+            variant="body1"
+            color={passwordStrength.score < 2 ? "error" : "textSecondary"}
+          >
+            {
+              ["Very Weak", "Weak", "Moderate", "Strong", "Very Strong"][
+                passwordStrength.score
+              ]
+            }
+          </Typography>
+
+          {/* <Typography variant="caption" color="textSecondary">
+            {passwordStrength.feedback}
+          </Typography> */}
           <FormControl fullWidth>
             <TextField
               name="confirm_password"
@@ -310,6 +352,7 @@ const SignupForm = () => {
                 },
                 "& .MuiFormHelperText-root": {
                   fontSize: "12px",
+                  fontWeight: 300,
                   mx: 0.5,
                   mt: 1,
                 },

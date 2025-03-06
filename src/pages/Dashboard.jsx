@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import UserMenu from "../components/shared/UserMenu";
 import { Stack } from "@mui/material";
 import Welcome from "../components/dashboard/Welcome";
+import { useUser } from "@clerk/clerk-react";
 
 const Dashboard = () => {
   useEffect(() => {

@@ -4,20 +4,6 @@ export const mt5AccountApi = createApi({
   reducerPath: "mt5AccountApi",
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_BACKEND_URL,
-    // prepareHeaders: async (headers) => {
-    //   try {
-    //     const { getToken } = useAuth();
-
-    //     const token = await getToken(); // Retrieve Clerk session token
-    //     console.log("Token:", token);
-    //     if (token) {
-    //       headers.set("Authorization", `Bearer ${token}`);
-    //     }
-    //   } catch (error) {
-    //     console.error("Error fetching Clerk token:", error);
-    //   }
-    //   return headers;
-    // },
     credentials: "include", // Ensure cookies are sent
   }),
   endpoints: (builder) => ({

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap");
 * {
   margin: 0px;
   padding: 0px;
@@ -7,4 +7,7 @@
 }
 body {
   width: 100%;
+}
+.react-flow__handle {
+  visibility: hidden;
 }

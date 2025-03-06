@@ -84,8 +84,6 @@ const Mt5ConnectionForm = () => {
       mt5_server: formData.mt5_server_details,
       token
     });
-    console.log("Form submitted with:", formData);
-    // API Call or Next Steps Here
   };
 
   return (

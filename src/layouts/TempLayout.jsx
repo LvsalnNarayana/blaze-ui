@@ -7,6 +7,8 @@ const TempLayout = ({ children }) => {
       direction={"row"}
       width={"100%"}
       minHeight={"100vh"}
+      maxHeight={"100vh"}
+      overflow={"hidden"}
       sx={{
         overflow: { xs: "auto", md: "hidden" },
       }}
@@ -73,7 +75,7 @@ const TempLayout = ({ children }) => {
         flex={1}
         minHeight={"100vh"}
         bgcolor={"#f1f1f3"}
-        justifyContent={"center"}
+        justifyContent={"flex-start"}
         alignItems={"center"}
         sx={{
           overflowY: "auto",
