@@ -5,6 +5,8 @@ import {
   Stack,
   TextField,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
@@ -12,6 +14,8 @@ import { useRegisterUserMutation } from "../../../redux/api/auth.api";
 import zxcvbn from "zxcvbn";
 
 const SignupForm = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("tablet"));
   const [formData, setFormData] = useState({
     firstname: "",
     lastname: "",
@@ -83,19 +87,36 @@ const SignupForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-
       registerUser(formData);
     }
   };
   return (
-    <Stack width="100%" justifyContent="center" alignItems="center" spacing={2} py={2}>
+    <Stack
+      width="100%"
+      minHeight={"100vh"}
+      flexGrow={1}
+      justifyContent="center"
+      alignItems="center"
+      spacing={2}
+      py={2}
+    >
       <Stack
+        py={isMobile && 6}
+        px={isMobile && 4}
+        height={!isMobile ? "100%" : "auto"}
         gap={1}
-        width={"55%"}
+        sx={
+          isMobile && {
+            backgroundColor: "#fff",
+            borderRadius: 6,
+            boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
+          }
+        }
+        width={isMobile ? "90%" : "45%"}
         justifyContent={"center"}
         alignItems={"center"}
       >
-        <Typography fontSize={44} fontWeight={600}>
+        <Typography flexShrink={0} fontSize={44} fontWeight={600}>
           Sign up!
         </Typography>
         <Typography
@@ -109,7 +130,7 @@ const SignupForm = () => {
           Just a few details, and you’re set
           <br /> for automated trading!
         </Typography>
-        <Stack width={"100%"} maxWidth={400} mt={4} spacing={2}>
+        <Stack width={"100%"} mt={4} spacing={2}>
           <Stack direction={"row"} width={"100%"} maxWidth={400} gap={2} mt={4}>
             <FormControl fullWidth>
               <TextField

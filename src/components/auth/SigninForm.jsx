@@ -9,14 +9,27 @@ import {
   Typography,
   FormLabel,
   Divider,
+  useTheme,
+  useMediaQuery,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useSignIn } from "@clerk/clerk-react";
 import { Link, useNavigate } from "react-router-dom";
 
 const SigninForm = () => {
-  const { signIn, isLoaded, setActive } = useSignIn();
+  const theme = useTheme();
   const navigate = useNavigate();
+  const { signIn, isLoaded, setActive } = useSignIn();
+  const isMobile = useMediaQuery(theme.breakpoints.down("tablet"));
+  /*
+  ..######..########....###....########.########
+  .##....##....##......##.##......##....##......
+  .##..........##.....##...##.....##....##......
+  ..######.....##....##.....##....##....######..
+  .......##....##....#########....##....##......
+  .##....##....##....##.....##....##....##......
+  ..######.....##....##.....##....##....########
+  */
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -94,8 +107,30 @@ const SigninForm = () => {
   };
 
   return (
-    <Stack width="100%" height={"100%"} justifyContent="center" alignItems="center" spacing={2}>
-      <Stack width="45%" spacing={3} alignItems="center">
+    <Stack
+      width="100%"
+      height={"100vh"}
+      sx={{overflow:"auto"}}
+      justifyContent="center"
+      alignItems="center"
+      spacing={2}
+      flexGrow={1}
+    >
+      <Stack
+        py={isMobile && 6}
+        px={isMobile && 4}
+        spacing={3}
+        width={isMobile ? "90%" : "45%"}
+        alignItems="center"
+        justifyContent={"center"}
+        sx={
+          isMobile && {
+            backgroundColor: "#fff",
+            borderRadius: 6,
+            boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
+          }
+        }
+      >
         <Typography variant="h4" fontSize={36} fontWeight={500}>
           Signin
         </Typography>

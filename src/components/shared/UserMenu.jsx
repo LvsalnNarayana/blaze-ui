@@ -2,7 +2,14 @@ import { useState } from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import PersonIcon from "@mui/icons-material/Person";
-import { IconButton, ListItemIcon, Stack, Typography } from "@mui/material";
+import {
+  IconButton,
+  ListItemIcon,
+  Stack,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import { useAuth, useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +18,9 @@ const UserMenu = () => {
   const navigate = useNavigate();
   const { signOut } = useAuth();
   const [anchorEl, setAnchorEl] = useState(null);
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("tablet"));
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -50,7 +60,14 @@ const UserMenu = () => {
         >
           <PersonIcon fontSize="small" />
         </IconButton>
-        <Typography variant="body2">{user?.fullName}</Typography>
+        <Typography
+          variant="body2"
+          fontSize={14}
+          color={isMobile ? "#fff" : "#000"}
+          fontWeight={500}
+        >
+          {user?.fullName}
+        </Typography>
       </Stack>
       <Menu
         id="basic-menu"

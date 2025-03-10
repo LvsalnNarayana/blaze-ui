@@ -7,10 +7,13 @@ import {
   Stack,
   TextField,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import React, { useState } from "react";
 import { useConnectMt5Mutation } from "../../../redux/api/mt5Account.api";
-import { useAuth } from '@clerk/clerk-react';
+import { useAuth } from "@clerk/clerk-react";
+import { Link } from "react-router-dom";
 
 const Mt5ConnectionForm = () => {
   const [formData, setFormData] = useState({
@@ -18,6 +21,9 @@ const Mt5ConnectionForm = () => {
     password: "TestPassword1234",
     mt5_server_details: "http://localhost:8080",
   });
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("tablet"));
 
   const [errors, setErrors] = useState({
     mt5_account_number: "",
@@ -74,25 +80,34 @@ const Mt5ConnectionForm = () => {
   };
 
   const { getToken } = useAuth();
-  const handleSubmit = async() => {
+  const handleSubmit = async () => {
     if (!validateForm()) return;
-        
-    const token = await getToken(); 
+
+    const token = await getToken();
     connectMt5({
       mt5_account_number: formData.mt5_account_number,
       password: formData.password,
       mt5_server: formData.mt5_server_details,
-      token
+      token,
     });
   };
 
   return (
     <Stack width="100%" justifyContent="center" alignItems="center" spacing={2}>
       <Stack
+        py={isMobile && 6}
+        px={isMobile && 4}
         gap={1}
-        width={"55%"}
+        width={!isMobile ? "55%" : "100%"}
         justifyContent={"center"}
         alignItems={"center"}
+        sx={
+          isMobile && {
+            backgroundColor: "#fff",
+            borderRadius: 6,
+            boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
+          }
+        }
       >
         <Typography fontSize={44} fontWeight={600}>
           One Last Step!
@@ -254,6 +269,28 @@ const Mt5ConnectionForm = () => {
           >
             Submit
           </Button>
+          {isMobile && (
+            <Typography
+              variant="body1"
+              fontSize={15}
+              textAlign={"center"}
+              fontWeight={300}
+              sx={{
+                mt: 2,
+                ml: 4,
+                textDecoration: "none",
+                color: "black",
+                cursor: "pointer",
+              }}
+            >
+              <Link
+                style={{ textDecoration: "none", color: "#1058DF" }}
+                to={"/"}
+              >
+                &#x2190;&nbsp;Back to website
+              </Link>
+            </Typography>
+          )}
         </Stack>
       </Stack>
     </Stack>

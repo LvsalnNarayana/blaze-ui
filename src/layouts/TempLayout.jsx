@@ -1,7 +1,6 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
 import React from "react";
-
-const TempLayout = ({ children }) => {
+const DesktopLayout = ({ children }) => {
   return (
     <Stack
       direction={"row"}
@@ -85,6 +84,52 @@ const TempLayout = ({ children }) => {
         {children}
       </Stack>
     </Stack>
+  );
+};
+
+const MobileLayout = ({ children }) => {
+  return (
+    <Stack
+      direction={"row"}
+      width={"100%"}
+      minHeight={"100vh"}
+      height={"fit-content"}
+      // maxHeight={"100vh"}
+      // overflow={"hidden"}
+      sx={{
+        position: "relative",
+      }}
+    >
+      <Box
+        component={"img"}
+        src="_bg.png"
+        sx={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          zIndex: -1,
+        }}
+      />
+
+      {children}
+    </Stack>
+  );
+};
+// eslint-disable-next-line react/prop-types
+const TempLayout = ({ children }) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("tablet"));
+  return (
+    <>
+      {!isMobile ? (
+        <DesktopLayout>{children}</DesktopLayout>
+      ) : (
+        <MobileLayout>{children}</MobileLayout>
+      )}
+    </>
   );
 };
 
